@@ -1,0 +1,14 @@
+{
+  "name": "chat-design-system",
+  "version": "0.0.6",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build-css.mjs && node scripts/build-docs.mjs && node scripts/build-standalone.mjs && node scripts/build-guide.mjs",
+    "check": "node scripts/validate.mjs",
+    "dev": "node scripts/dev.mjs",
+    "pack": "zip -rq ../uds-chat-build.zip . -x '.env' '.DS_Store' '*/.DS_Store' '.claude/settings.local.json'"
+  }
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>복합 채팅 유형 시안</title>
+<!-- 필요한 파일: lib/design-system.css, lib/vendor/lottie.min.js, agent_design_system/assets/symbol/ (경로는 이 파일 위치 기준). 한 대화에 여러 답변 유형(간단한 답 · 작업 단계 · 표 · 코드 · 목록 · 인용)과 텍스트 시머를 담음 -->
+<link rel="stylesheet" href="../lib/design-system.css">
+<script src="../lib/vendor/lottie.min.js"></script>
+<script src="../agent_design_system/assets/symbol/code/web/agent-motion.js"></script>
+</head>
+<body>
+<div class="chat">
+  <div class="markdown" id="md"></div>
+</div>
+
+<script>
+// 화면 스타일은 모두 lib/design-system.css의 정의 클래스입니다. 이 스크립트는 심볼 모션과 턴 순서만 재생합니다. 새로 고치면 처음부터 다시 재생됩니다.
+// 턴 유형: simple = 생각 중 뒤 바로 답(상태 줄을 즉시 지움) / work = 생각 중 → 생각 끝 → 작업 중(단계 문구 교체) → 작업 완료(완료 문구 + `>`)
+(() => {
+  const BASE = '../agent_design_system/assets/symbol/resources/motion/';
+  const md = document.getElementById('md');
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const down = () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  const COPY = `<button type="button" class="act" data-act="copy" aria-label="복사"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button>`;
+  const AI_ACTIONS = `<div class="actions"><button type="button" class="act" data-act="copy" aria-label="복사"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button><button type="button" class="act" data-act="like" aria-label="좋아요"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H4a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h3zm0 0 4-8a2.2 2.2 0 0 1 3 2.4L13 9h6a2 2 0 0 1 2 2.3l-1.4 8A2 2 0 0 1 17.6 21H7"/></svg></button><button type="button" class="act" data-act="dislike" aria-label="싫어요"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g transform="rotate(180 12 12)"><path d="M7 10v11H4a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h3zm0 0 4-8a2.2 2.2 0 0 1 3 2.4L13 9h6a2 2 0 0 1 2 2.3l-1.4 8A2 2 0 0 1 17.6 21H7"/></g></svg></button><button type="button" class="act" data-act="share" aria-label="공유"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg></button><button type="button" class="act" data-act="regenerate" aria-label="다시 생성"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg></button></div>`;
+  const CHEVRON = '<span class="status-chevron" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></span>';
+  const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html) e.innerHTML = html; return e; };
+
+  const TURNS = [
+    { type: 'simple', q: '배포 전에 꼭 확인할 게 뭐야?', think: 1200, blocks: [
+      '<p>세 가지만 먼저 보세요. <strong>환경 변수</strong>, <strong>빌드 통과</strong>, <strong>롤백 방법</strong>입니다.</p>' ] },
+    { type: 'work', q: '이번 분기 배포 일정을 표로 정리하고 설정 파일도 만들어줘', think: 1600, steps: ['일정 모으는 중', '표 만드는 중', '설정 파일 쓰는 중'], done: '작업 완료', blocks: [
+      '<p>일정을 표로 정리하고 설정 파일을 만들었습니다.</p>',
+      '<div class="tw"><table><thead><tr><th>단계</th><th>기간</th><th>담당</th></tr></thead><tbody><tr><td>개발 마감</td><td>1 ~ 4주</td><td>개발팀</td></tr><tr><td>베타 점검</td><td>5 ~ 8주</td><td>품질팀</td></tr><tr><td>정식 배포</td><td>9 ~ 12주</td><td>전체</td></tr></tbody></table></div>',
+      '<h3>설정 파일</h3><div class="pw"><div class="code"><div class="lang">json</div><pre><code>{\n  <span class="ts">"release"</span>: {\n    <span class="ts">"weeks"</span>: <span class="ts">12</span>,\n    <span class="ts">"stages"</span>: [<span class="ts">"개발"</span>, <span class="ts">"베타"</span>, <span class="ts">"정식"</span>]\n  }\n}</code></pre></div></div>' ] },
+    { type: 'work', q: '그럼 위험한 부분이 어디야?', think: 1400, steps: ['일정 다시 보는 중', '위험 요소 고르는 중'], done: '검토 완료', blocks: [
+      '<p>가장 위험한 구간은 <strong>베타 점검</strong>입니다.</p>',
+      '<h2>확인할 것</h2><ul><li><strong>점검 인원</strong>: 품질팀이 다른 일정과 겹치지 않는지 봅니다.</li><li><strong>수정 여유</strong>: 오류가 나와도 1주는 남겨 둡니다.</li></ul>',
+      '<div class="bw"><blockquote>일정이 밀리면 정식 배포보다 베타 범위를 줄이는 쪽이 안전합니다.</blockquote></div>' ] }
+  ];
+
+  async function landing(){
+    const l = el('div', 'landing', '<div class="symbol is-landing" role="img" aria-label="AI Agent"></div>');
+    md.appendChild(l);
+    const a = AgentMotion.play(l.firstChild, BASE + 'agent_signature/lottie/agent_signature.json', { loop: false });
+    await wait(2600);
+    a.destroy(); l.remove();
+  }
+
+  async function swap(lb, text){ lb.classList.add('is-swapping'); await wait(120); lb.textContent = text; lb.classList.remove('is-swapping'); await wait(120); }
+
+  async function turn(t, thread){
+    thread.appendChild(el('div', 'msg user', '<div class="col"><div class="bubble"><p>' + t.q + '</p></div></div><div class="actions">' + COPY + '</div>'));
+    const ai = el('div', 'msg ai'), content = el('div', 'content');
+    const status = el('div', 'status is-thinking', '<div class="symbol is-status" role="img" aria-label="생각하는 중"></div><span class="status-label">생각하는 중</span>');
+    content.appendChild(status); ai.appendChild(content); thread.appendChild(ai);
+    const flow = AgentMotion.state(status.firstChild, BASE); flow.think(); down();
+    await wait(t.think);
+    const lb = status.lastChild;
+    if (t.type === 'simple'){                               // 빠른 응답: 페이드 없이 즉시 지움
+      flow.destroy(); status.remove();
+    } else {
+      flow.work();                                          // 한 바퀴를 마친 뒤 생각 끝 → 작업 중
+      status.className = 'status is-thinking-end';
+      await wait(450); await swap(lb, t.steps[0]); await wait(1140 - 450 - 240);
+      status.className = 'status is-working';
+    }
+    const per = t.type === 'work' ? Math.max(1, Math.ceil(t.blocks.length / t.steps.length)) : 99, shown = [];
+    for (let i = 0; i < t.blocks.length; i++){
+      if (t.type === 'work' && i && i % per === 0 && t.steps[i / per]) await swap(lb, t.steps[i / per]);
+      const d = el('div', '', t.blocks[i]);
+      while (d.firstChild) content.appendChild(d.firstChild);
+      down(); await wait(1500);
+    }
+    if (t.type === 'work'){
+      // 작업 완료: 심볼 · 시머 문구가 한 그룹으로 페이드(240ms) + 완료 문구가 나타나며 왼쪽으로 이동 → `>`(접힘)
+      const sy = status.firstChild, sr = status.getBoundingClientRect(), lr = lb.getBoundingClientRect(), x = lr.left - sr.left;
+      const done = el('span', 'status-label is-complete-label', t.done);
+      done.style.left = x + 'px'; status.appendChild(done); void done.offsetWidth;
+      const cr = sy.getBoundingClientRect(); lb.style.transformOrigin = (cr.left + cr.width / 2 - lr.left) + 'px 50%';
+      sy.classList.add('is-fading'); lb.classList.add('is-fading'); done.classList.add('is-shown');
+      done.style.transform = 'translateX(' + (-x) + 'px)'; await wait(260);
+      flow.destroy(); sy.remove(); lb.remove(); done.className = 'status-label'; done.removeAttribute('style');
+      status.className = 'status is-research is-complete';
+      status.insertAdjacentHTML('beforeend', CHEVRON);
+    }
+    ai.appendChild(el('div', '', AI_ACTIONS).firstChild);   // 작업이 끝난 뒤에만 액션 줄 (UI-MSG-17)
+    down();
+  }
+
+  (async () => {
+    await landing();
+    const thread = el('div', 'thread'); md.appendChild(thread);
+    for (const t of TURNS){ await turn(t, thread); await wait(1200); }
+  })();
+})();
+</script>
+</body>
+</html>

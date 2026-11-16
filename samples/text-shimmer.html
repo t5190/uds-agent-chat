@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>텍스트 시머 시안</title>
+<!-- 필요한 파일: lib/design-system.css, lib/vendor/lottie.min.js, agent_design_system/assets/symbol/ (경로는 이 파일 위치 기준). 생각 중 · 생각 끝 · 작업 중 문구의 텍스트 시머(4-9) -->
+<link rel="stylesheet" href="../lib/design-system.css">
+<script src="../lib/vendor/lottie.min.js"></script>
+<script src="../agent_design_system/assets/symbol/code/web/agent-motion.js"></script>
+</head>
+<body>
+<div class="chat">
+  <div class="markdown">
+    <div class="thread">
+
+      <!-- 1. 생각 중: 시머 1.08초 반복 -->
+      <div class="msg ai">
+        <div class="content">
+          <div class="status is-thinking" data-flow="thinking"><div class="symbol is-status" role="img" aria-label="생각하는 중"></div><span class="status-label">생각하는 중</span></div>
+          <p>생각 중: 하이라이트가 1.08초마다 한 번 지나갑니다.</p>
+        </div>
+      </div>
+
+      <!-- 2. 생각 끝: 시머 1.14초 1회 → 작업 중으로 이어짐 (4초마다 다시 재생) -->
+      <div class="msg ai">
+        <div class="content">
+          <div class="status is-thinking" id="end" data-flow="end"><div class="symbol is-status" role="img" aria-label="생각하는 중"></div><span class="status-label">생각하는 중</span></div>
+          <p>생각 끝: 1.14초 동안 한 번 지나간 뒤 작업 중 문구로 바뀝니다.</p>
+        </div>
+      </div>
+
+      <!-- 3. 작업 중: 시머 3.84초 반복 -->
+      <div class="msg ai">
+        <div class="content">
+          <div class="status is-working" data-flow="working"><div class="symbol is-status" role="img" aria-label="작업하는 중"></div><span class="status-label">작업하는 중</span></div>
+          <p>작업 중: 3.84초마다 한 번 지나갑니다.</p>
+        </div>
+      </div>
+
+      <!-- 4. 긴 문구: 주기는 같고 한 줄을 넘으면 말줄임 -->
+      <div class="msg ai">
+        <div class="content">
+          <div class="status is-working" data-flow="working"><div class="symbol is-status" role="img" aria-label="작업하는 중"></div><span class="status-label">파일 읽는 중 · /Users/홍길동/Documents/2026/분기별 보고서/최종/AgentMotionView.java</span></div>
+          <p>긴 문구: 문구가 길어도 주기는 같고, 끝은 말줄임으로 줄어듭니다.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+(() => {
+  const BASE = '../agent_design_system/assets/symbol/resources/motion/';
+  document.querySelectorAll('.status[data-flow]').forEach(st => {
+    const kind = st.dataset.flow, slot = st.querySelector('.symbol');
+    if (kind === 'thinking') { AgentMotion.state(slot, BASE).think(); return; }
+    if (kind === 'working') { const f = AgentMotion.state(slot, BASE); f.think(); setTimeout(() => f.work(), 1100); return; }
+  });
+  // 생각 끝: 생각 중 → 생각 끝(문구 교체) → 작업 중을 4초 뒤 처음부터 다시 재생
+  const st = document.getElementById('end'), label = st.querySelector('.status-label');
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  async function loop() {
+    for (;;) {
+      st.className = 'status is-thinking'; label.textContent = '생각하는 중';
+      const slot = st.querySelector('.symbol'); slot.innerHTML = '';
+      const f = AgentMotion.state(slot, BASE); f.think();
+      await sleep(1080); f.work(); st.className = 'status is-thinking-end';
+      await sleep(450); label.classList.add('is-swapping'); await sleep(120);
+      label.textContent = '작업하는 중'; label.classList.remove('is-swapping'); await sleep(1140 - 450 - 120);
+      st.className = 'status is-working'; await sleep(4000);
+    }
+  }
+  loop();
+})();
+</script>
+</body>
+</html>

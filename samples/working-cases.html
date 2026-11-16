@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>작업 중 케이스 시안</title>
+<!-- 필요한 파일: lib/design-system.css, lib/vendor/lottie.min.js, agent_design_system/assets/symbol/ (경로는 이 파일 위치 기준). 작업 중 단계 문구 교체 · 작업 이력 · 긴 문구 말줄임 -->
+<link rel="stylesheet" href="../lib/design-system.css">
+<script src="../lib/vendor/lottie.min.js"></script>
+<script src="../agent_design_system/assets/symbol/code/web/agent-motion.js"></script>
+</head>
+<body>
+<div class="chat">
+  <div class="markdown">
+    <div class="thread">
+
+      <!-- 턴 1: 작업이 끝나 심볼은 사라지고 완료 문구와 `>`(접힘)만 본문 왼쪽 선에 남음(.is-complete). 눌러서 작업 내용을 펼침 -->
+      <div class="msg user">
+        <div class="col"><div class="bubble"><p>이 문서에서 요소를 뽑아서 표로 정리해줘</p></div></div>
+        <div class="actions"><button type="button" class="act" data-act="copy" aria-label="복사"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
+      </div>
+      <div class="msg ai">
+        <div class="content">
+          <div class="status is-research is-complete"><span class="status-label">요소 3건 정리</span><span class="status-chevron" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></span></div>
+          <div class="process"><div class="process-step"><span class="process-mark"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 8.5l2.3 2.3 4.7-5"/></svg></span><div class="process-body"><div class="process-head"><span class="process-title">파일 읽는 중 · 요소 목록.pdf</span></div></div></div><div class="process-step"><span class="process-mark"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 8.5l2.3 2.3 4.7-5"/></svg></span><div class="process-body"><div class="process-head"><span class="process-title">표 만드는 중</span></div></div></div></div>
+          <p><strong>문서에서 요소 3개를 뽑아 표로 정리했어요.</strong> 종류와 쓰임으로 나눴습니다.</p>
+        </div>
+        <div class="actions"><button type="button" class="act" data-act="copy" aria-label="복사"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
+      </div>
+
+      <!-- 응답 (완료): 본문 다음에 출처 목록, 맨 끝에 액션 줄 -->
+      <div class="msg ai">
+        <div class="content">
+          <p>지금의 1초는 세슘-133 원자가 내는 복사의 주기로 정해져 있어요. 세슘-133 원자의 바닥 상태 초미세 준위 사이 전이에 해당하는 복사가 9,192,631,770번 진동하는 시간이 1초입니다. <!-- 출처 칩: 문장 끝. 미리보기 카드는 호버(Desktop)·탭(Mobile)에서만 뜸 --><span class="source-pop"><a class="source-chip" href="https://www.bipm.org"><span class="favicon" aria-hidden="true">U</span>bipm.org</a><span class="source-preview" role="tooltip"><span class="source-site"><span class="favicon" aria-hidden="true">U</span>BIPM</span><span class="source-title">SI 기본 단위: 초(second)</span><span class="source-summary">국제단위계(SI)에서 초는 세슘-133 원자의 바닥 상태 초미세 준위 사이 전이에 해당하는 복사 주기의 9,192,631,770배로 정의됩니다.</span><span class="source-date">2026년 3월 12일</span></span></span></p>
+          <h3>기준이 바뀐 과정</h3>
+          <ul>
+            <li>1967년 이전에는 지구 자전을 기준으로 삼았어요.</li>
+            <li>1967년부터 지구 자전 대신 원자의 진동을 기준으로 씁니다. <a class="source-chip" href="https://www.bipm.org"><span class="favicon" aria-hidden="true">U</span>bipm.org</a></li>
+            <li>지구 자전과 원자시가 어긋나면 윤초를 넣어 차이를 맞춰요. <a class="source-chip" href="https://www.iers.org"><span class="favicon" aria-hidden="true">U</span>iers.org</a></li>
+          </ul>
+          <p>그래서 원자시계가 나타내는 시각과 지구의 자전으로 정한 시각을 함께 관리하고, 어긋남이 커지지 않게 윤초를 발표합니다.<a class="source-chip" href="https://www.iers.org"><span class="favicon" aria-hidden="true">U</span>iers.org</a><a class="source-chip" href="https://www.nist.gov"><span class="favicon" aria-hidden="true">U</span>nist.gov</a></p>
+          <!-- 출처 목록 -->
+          <div class="sources">
+            <h4>출처</h4>
+            <ol>
+              <li><span class="favicon" aria-hidden="true">U</span><a href="https://www.bipm.org">국제도량형국(BIPM), SI 기본 단위: 초</a></li>
+              <li><span class="favicon" aria-hidden="true">U</span><a href="https://www.iers.org">국제지구회전좌표계사업(IERS), 윤초 공지</a></li>
+              <li><span class="favicon" aria-hidden="true">U</span><a href="https://www.nist.gov">미국 국립표준기술연구소(NIST), 시간과 주파수</a></li>
+            </ol>
+          </div>
+        </div>
+        <div class="actions">
+          <button type="button" class="act" data-act="copy" aria-label="복사"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button>
+          <button type="button" class="act" data-act="like" aria-label="좋아요"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H4a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h3zm0 0 4-8a2.2 2.2 0 0 1 3 2.4L13 9h6a2 2 0 0 1 2 2.3l-1.4 8A2 2 0 0 1 17.6 21H7"/></svg></button>
+          <button type="button" class="act" data-act="dislike" aria-label="싫어요"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g transform="rotate(180 12 12)"><path d="M7 10v11H4a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h3zm0 0 4-8a2.2 2.2 0 0 1 3 2.4L13 9h6a2 2 0 0 1 2 2.3l-1.4 8A2 2 0 0 1 17.6 21H7"/></g></svg></button>
+          <button type="button" class="act" data-act="share" aria-label="공유"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg></button>
+          <button type="button" class="act" data-act="regenerate" aria-label="다시 생성"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg></button>
+          
+        </div>
+      </div>
+
+      <!-- 턴 2: 작업 중. 단계가 바뀌면 문구만 교체하고 심볼과 시머는 이어짐(.is-swapping) -->
+      <div class="msg user">
+        <div class="col"><div class="bubble"><p>계산이 끝나면 오류가 있는 시트만 알려줘</p></div></div>
+        <div class="actions"><button type="button" class="act" data-act="copy" aria-label="복사"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
+      </div>
+      <div class="msg ai">
+        <div class="content">
+          <div class="status is-working is-research" id="steps"><div class="symbol is-status" role="img" aria-label="작업하는 중"></div><span class="status-label">시트 불러오는 중</span></div>
+          <p>오류가 있는 시트를 찾는 중이에요. 작업이 진행되는 동안 문구만 바뀝니다.</p>
+        </div>
+      </div>
+
+      <!-- 턴 3: 작업 중. 문구가 한 줄을 넘으면 끝을 말줄임 -->
+      <div class="msg user">
+        <div class="col"><div class="bubble"><p>이 폴더의 보고서 파일을 전부 열어서 시트별 합계를 계산해줘</p></div></div>
+        <div class="actions"><button type="button" class="act" data-act="copy" aria-label="복사"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
+      </div>
+      <div class="msg ai">
+        <div class="content">
+          <div class="status is-working is-research"><div class="symbol is-status" role="img" aria-label="작업하는 중"></div><span class="status-label">도구 호출: 파일 시스템에서 /Users/홍길동/Documents/2026/분기별 보고서/최종/최종_수정본_v3.xlsx 를 열어 시트별 합계와 전월 대비 증감률을 계산하는 중입니다</span></div>
+          <p>보고서 12개를 열어 시트별 합계를 계산하고 있어요.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+// 심볼 모션: 진행 중인 상태 줄마다 생각 중 → 생각 끝 → 작업 중
+(() => {
+  const BASE = '../agent_design_system/assets/symbol/resources/motion/';
+  document.querySelectorAll('.status.is-working .symbol.is-status').forEach(slot => {
+    const flow = AgentMotion.state(slot, BASE);
+    flow.think();
+    setTimeout(() => flow.work(), 1100);
+  });
+})();
+// 작업 단계 문구 교체: 사라짐 120ms + 나타남 120ms. 심볼과 시머는 처음부터 다시 시작하지 않는다.
+(() => {
+  const label = document.querySelector('#steps .status-label');
+  const steps = ['시트 불러오는 중', '합계 계산 중', '오류 시트 찾는 중'];
+  let i = 0;
+  setInterval(() => {
+    i = (i + 1) % steps.length;
+    label.classList.add('is-swapping');
+    setTimeout(() => { label.textContent = steps[i]; label.classList.remove('is-swapping'); }, 120);
+  }, 2600);
+})();
+// 완료 문구와 `>`를 누르면 작업 내용(.process)을 펼치고 접는다. 처음에는 접힌 상태.
+document.querySelectorAll('.status.is-complete').forEach(function (st) {
+  st.addEventListener('click', function () { st.classList.toggle('is-open'); });
+});
+</script>
+</body>
+</html>

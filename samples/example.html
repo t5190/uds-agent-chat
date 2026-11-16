@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시안 예시</title>
+<!-- 필요한 파일: lib/design-system.css, lib/vendor/lottie.min.js, lib/stream-play.js(답변을 순서대로 보임), agent_design_system/assets/symbol/ (경로는 이 파일 위치 기준) -->
+<link rel="stylesheet" href="../lib/design-system.css">
+<script src="../lib/vendor/lottie.min.js"></script>
+<script src="../agent_design_system/assets/symbol/code/web/agent-motion.js"></script>
+<script src="../lib/stream-play.js" defer></script>
+</head>
+<body>
+<!-- 채팅 영역: <body>의 바로 아래 자식은 .chat 하나. 배경은 CSS가 뷰포트 끝까지 채움 -->
+<div class="chat">
+  <div class="markdown">
+    <div class="thread">
+
+      <!-- 요청 -->
+      <div class="msg user">
+        <div class="col">
+          <div class="bubble"><p>이번 주말 서울 근교 당일치기 여행지를 추천해 주세요.</p></div>
+        </div>
+      </div>
+
+      <!-- 응답 (진행 중): 작업 상태 줄에는 심볼 모션이 필수. data-stream이면 stream-play.js가 답변을 순서대로 보임 -->
+      <div class="msg ai" data-stream>
+        <div class="content">
+          <div class="status is-working">
+            <div class="symbol is-status" role="img" aria-label="작업하는 중"></div>
+            <span class="status-label">작업하는 중</span>
+          </div>
+          <p>가까운 곳부터 세 곳을 골랐습니다.</p>
+          <ul>
+            <li>양평: 두물머리 산책</li>
+            <li>가평: 남이섬 자전거</li>
+            <li>파주: 임진각과 헤이리</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// 심볼 모션 재생: 마크업의 .symbol.is-status 자리에 작업 중 모션을 붙인다.
+(() => {
+  const BASE = '../agent_design_system/assets/symbol/resources/motion/';
+  const slot = document.querySelector('.symbol.is-status');
+  const flow = AgentMotion.state(slot, BASE);
+  flow.think();
+  setTimeout(() => flow.work(), 2600);
+})();
+</script>
+</body>
+</html>

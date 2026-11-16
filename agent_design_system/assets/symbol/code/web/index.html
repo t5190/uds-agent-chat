@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Agent Motion</title>
+<style>
+  :root { --bg: #f7f7f7; --fg: #1a1a1a; --sub: #8a8a8a; }
+  body { margin: 0; padding: 32px 16px; background: var(--bg); color: var(--fg);
+         font-family: system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif; }
+  .row { display: flex; gap: 32px; flex-wrap: wrap; }
+  figure { margin: 0; text-align: center; }
+  figcaption { font-size: 13px; color: var(--sub); margin-top: 8px; }
+  .agent-motion { width: 120px; height: 120px; }
+  button { margin-top: 24px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <figure><div id="signature" class="agent-motion"></div><figcaption>agent_signature (1회)</figcaption></figure>
+    <figure><div id="flow" class="agent-motion"></div><figcaption>thinking_loop → thinking_end → working</figcaption></figure>
+  </div>
+  <button id="replay" type="button">다시 재생</button>
+
+  <script src="../../../../../lib/vendor/lottie.min.js"></script>
+  <script src="agent-motion.js"></script>
+  <script>
+    const base = "../../resources/motion/";
+    const signature = AgentMotion.play(document.getElementById("signature"), base + "agent_signature/lottie/agent_signature.json", { loop: false });
+    const flow = AgentMotion.state(document.getElementById("flow"), base);
+    flow.think();
+    setTimeout(() => flow.work(), 5000);           // e.g. when the first token arrives
+    document.getElementById("replay").onclick = () => { signature.goToAndPlay(0, true); flow.think(); setTimeout(() => flow.work(), 5000); };
+  </script>
+</body>
+</html>
