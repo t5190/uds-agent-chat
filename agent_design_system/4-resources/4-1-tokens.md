@@ -3,7 +3,7 @@ id: SPEC-4-1
 type: spec
 title: 디자인 토큰
 status: stable
-version: 1.4.0
+version: 1.2.0
 summary: 채팅 화면에 쓰는 색 · 모서리 · 그림자 · 서체 토큰입니다.
 stage: 4
 audience: ui
@@ -35,16 +35,13 @@ base: Figma v1.0.0 (26.02.27)
 | `color/background/base/high` | `#F7F7F7` | `#0A0A0A` | 헤더 배경 | Figma 변수 |
 | `color/background/base/low-level1` | `#FCFCFC` | `#1F1F1F` | 입력창 배경 | Figma 변수 |
 | `color/container/base/higher` | `#E5E5E5` | `#262626` | 요청 말풍선 | Figma 변수 |
-| `color/container/base/high` | `#F7F7F7` | `#1F1F1F` | 첨부 파일 카드 · 결과 카드 | Figma 변수 |
+| `color/container/base/high` | `#F7F7F7` | `#1F1F1F` | 첨부 파일 카드 | Figma 변수 |
 | `color/container/brand/secondary` | `#1A1A1A` | `#474747` | 전송 버튼, 체크된 체크박스 | Figma 변수 |
 | `alpha/black-4` | `#1A1A1A0A` | `#FFFFFF0F` | 표 머리글 배경 | 프리미티브 조합 (`color/bw/light/black` · 불투명도 4) |
 | `alpha/black-8` | `#1A1A1A14` | `#FFFFFF1F` | 인라인 코드 배경, 그림자 | Figma 변수 |
 | `alpha/white-80` | `#FFFFFFCC` | `#262626CC` | 맨 아래로 이동 버튼 | 프리미티브 조합 (`color/bw/white` · 불투명도 80) |
 | `chat/code/bg` | `#1A1A1A` | — | 코드 블록 배경 (다크 모드에서도 동일) | 로컬 |
-| `chat/table/bg` | `#FFFFFF` | `#141414` | 표 · 출처 미리보기 카드 · 결과 카드 동작 버튼 배경 | 로컬 |
-| `chat/source/bg` | `#1A1A1A0F` | `#FFFFFF17` | 출처 칩 배경(불투명도 6%). 임시 | 로컬 |
-| `chat/source/bg-hover` | `#1A1A1A1F` | `#FFFFFF2E` | 출처 칩 호버 · 열림(불투명도 12%). 임시 | 로컬 |
-| `chat/search/bg` | `#1A1A1A0D` | `#FFFFFF14` | 검색 단계 칩 배경(불투명도 5%). 임시 | 로컬 |
+| `chat/table/bg` | `#FFFFFF` | `#141414` | 표 · 결과 카드 배경 | 로컬 |
 
 ## 색 — 글자 · 아이콘
 
@@ -61,9 +58,6 @@ base: Figma v1.0.0 (26.02.27)
 | `chat/text/cell` | `#333333` | `#D4D4D4` | 표 본문 셀 | 로컬 |
 | `chat/text/done` | `#9E9E9E` | `#6B6B6B` | 완료된 체크리스트 항목, 코드 언어 라벨 | 로컬 |
 | `chat/text/status` | `#7F7F7F` | `#8A8A8A` | 작업 상태 표시, 결과 카드 보조 글자 | 로컬 |
-| `chat/text/shimmer` | `#8E8E93` | `#6B6B70` | 텍스트 시머 재생 중 글자 바탕색 | 로컬 |
-| `chat/text/shimmer-highlight` | `#1C1C1E` | `#B8B8BD` | 완료 문구와 동작 줄이기의 정적 글자색. 다크 값은 임시 | 로컬 |
-| `chat/text/shimmer-sweep` | `#FFFFFF80` | `#FFFFFF80` | 텍스트 시머 하이라이트(문구 위를 지나가는 흰 띠, 불투명도 50%) | 로컬 |
 | `chat/code/inline` | `#FD312E` | `#FF6B69` | 인라인 코드 글자 | 로컬 |
 | `chat/code/text` | `#C8CDD6` | — | 코드 블록 기본 글자 · 함수 | 로컬 |
 | `chat/syntax/keyword` | `#C3A6E8` | — | 코드 키워드 | 로컬 |
@@ -76,11 +70,6 @@ base: Figma v1.0.0 (26.02.27)
 | --- | --- | --- | --- | --- |
 | `color/border/base/high` | `#E5E5E5` | `#474747` | 표 · 파일 카드 · 입력창 테두리, 인용문 세로선 | Figma 변수 |
 | `chat/border/control` | `#747474` | `#8A8A8A` | 체크박스 테두리 (미체크) | 로컬 |
-| `chat/border/button` | `#CCCCCC` | `#5C5C5C` | 결과 카드 동작 버튼 테두리 | 로컬 |
-| `chat/result/tile-wait` | `#F2F2F2` | `#2E2E2E` | 결과 카드 실행 중 타일 배경 (다크는 임시) | 로컬 |
-| `chat/result/tile-fail` | `#FDECEA` | `#3D2220` | 결과 카드 실패 타일 배경 (다크는 임시) | 로컬 |
-| `chat/todo/pending` | `#ABABAB` | `#6E6E6E` | 작업 목록 카드의 예정 항목 글자 · 원 (다크는 임시) | 로컬 |
-| `chat/result/icon-fail` | `#D92D20` | `#FF6B60` | 결과 카드 실패 타일의 경고 아이콘 (임시) | 로컬 |
 | `chat/divider` | `#EBEBEB` | `#333333` | 구분선 | 로컬 |
 
 ## 모서리 · 그림자
@@ -92,7 +81,6 @@ base: Figma v1.0.0 (26.02.27)
 | `radius/large` | `12px` | — | 말풍선, 코드 블록, 이미지, 파일 카드, 입력창 | Figma 변수 |
 | `radius/full` | `999px` | — | 버튼, 칩 | Figma 변수 |
 | `shadow-level2` | `0 2px 12px #1A1A1A14` | `0 2px 12px #00000066` | 입력창 | Figma 스타일 |
-| `chat/shadow/popover` | `0 4px 16px #1A1A1A14` | `0 4px 16px #00000066` | 출처 미리보기 카드. 임시 | 로컬 |
 
 ## 서체
 
