@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>피자 레시피</title>
+<!-- 필요한 파일: lib/design-system.css, lib/vendor/lottie.min.js, lib/stream-play.js(답변을 순서대로 보임), agent_design_system/assets/symbol/ (경로는 이 파일 위치 기준) -->
+<link rel="stylesheet" href="../lib/design-system.css">
+<script src="../lib/vendor/lottie.min.js"></script>
+<script src="../agent_design_system/assets/symbol/code/web/agent-motion.js"></script>
+<script src="../lib/stream-play.js" defer></script>
+</head>
+<body>
+<!-- 채팅 영역: <body>의 바로 아래 자식은 .chat 하나. 배경은 CSS가 뷰포트 끝까지 채움 -->
+<div class="chat">
+  <div class="markdown">
+    <div class="thread">
+
+      <!-- 요청 -->
+      <div class="msg user">
+        <div class="col">
+          <div class="bubble"><p>집에서 만들 수 있는 피자 레시피 알려 주세요.</p></div>
+        </div>
+      </div>
+
+      <!-- 응답 (진행 중): 작업 상태 줄에는 심볼 모션이 필수. data-stream이면 stream-play.js가 답변을 순서대로 보임 -->
+      <div class="msg ai" data-stream>
+        <div class="content">
+          <div class="status is-working">
+            <div class="symbol is-status" role="img" aria-label="작업하는 중"></div>
+            <span class="status-label">작업하는 중</span>
+          </div>
+
+          <p><strong>반죽을 하루 숙성하고 250도 오븐에서 굽는 것</strong>이 집에서 피자를 맛있게 만드는 핵심이에요.</p>
+
+          <h3>재료</h3>
+          <p>지름 25cm 한 판 기준입니다.</p>
+          <div class="tw">
+            <table>
+              <thead>
+                <tr><th>재료</th><th>양</th><th>역할</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>강력분</td><td>300g</td><td>쫄깃한 식감</td></tr>
+                <tr><td>물</td><td>190ml</td><td>반죽 수분</td></tr>
+                <tr><td>드라이 이스트</td><td>2g</td><td>발효</td></tr>
+                <tr><td>소금</td><td>6g</td><td>간</td></tr>
+                <tr><td>올리브유</td><td>1큰술</td><td>부드러움</td></tr>
+                <tr><td>토마토소스</td><td>4큰술</td><td>베이스</td></tr>
+                <tr><td>모짜렐라 치즈</td><td>150g</td><td>토핑</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>토핑은 취향대로 더해도 되지만, 수분이 많은 재료는 물기를 빼고 올려야 바닥이 눅눅해지지 않습니다.</p>
+
+          <h3>만드는 순서</h3>
+          <p>반죽부터 굽기까지 여섯 단계예요.</p>
+          <ol>
+            <li>강력분, 이스트, 소금을 섞고 물과 올리브유를 넣어 5분 동안 치대요.</li>
+            <li>랩을 씌워 상온에서 1시간 동안 1차 발효해요.</li>
+            <li>반죽을 둥글게 빚어 냉장고에서 <strong>8시간 이상</strong> 숙성해요.</li>
+            <li>굽기 1시간 전에 꺼내 상온에 두었다가 손으로 눌러 25cm로 펴요.</li>
+            <li>토마토소스를 바르고 모짜렐라 치즈를 올려요.</li>
+            <li>250도로 예열한 오븐에서 <strong>8~10분</strong>, 치즈가 갈색으로 변할 때까지 구워요.</li>
+          </ol>
+
+          <div class="bw"><blockquote>오븐 철판을 함께 예열해 그 위에 반죽을 올리면 바닥이 훨씬 바삭해집니다.</blockquote></div>
+          <p>오븐 최고 온도가 250도보다 낮으면 굽는 시간을 2~3분 늘리세요.</p>
+
+          <p>사용하는 오븐의 최고 온도가 몇 도인가요?</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// 심볼 모션 재생: 마크업의 .symbol.is-status 자리에 작업 중 모션을 붙인다.
+(() => {
+  const BASE = '../agent_design_system/assets/symbol/resources/motion/';
+  const slot = document.querySelector('.symbol.is-status');
+  const flow = AgentMotion.state(slot, BASE);
+  flow.think();
+  setTimeout(() => flow.work(), 2600);
+})();
+</script>
+</body>
+</html>
